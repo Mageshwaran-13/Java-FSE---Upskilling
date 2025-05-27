@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Community Events Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <style>
+        body {
+            /* Task 4: Add a background image to the body with fallback color */
+            background-color: var(--background-light); /* Fallback color */
+            background-image: url('https://via.placeholder.com/1920x1080/F0F4F8/000000?text=Community+Background');
+            background-size: cover;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+        }
+
+        /* Task 10: Media query for screens smaller than 768px */
+        @media (max-width: 768px) {
+            nav ul {
+                flex-direction: column; /* Stack navigation links vertically */
+            }
+
+            nav ul li {
+                margin: 0.5rem 0;
+            }
+
+            .event-gallery td {
+                display: block; /* Stack gallery images on small screens */
+                width: 100%;
+            }
+
+            .gallery-image {
+                width: 90vw; /* Use viewport width for flexible sizing */
+                height: auto;
+            }
+
+            h1 {
+                font-size: 1.8em; /* Reduce font size */
+            }
+
+            h2 {
+                font-size: 1.5em; /* Reduce font size */
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1 style="color: crimson;">Community Events Portal</h1>
+        <p>Your guide to local happenings and services.</p>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#events">Events</a></li>
+            <li><a href="#registration">Register</a></li>
+            <li><a href="#feedback">Feedback</a></li>
+            <li><a href="help.html" target="_blank">Help</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <section id="home">
+            <h2>Welcome to Your Local Community Hub!</h2>
+            <div id="welcomeBanner">
+                <p>Hello valued resident! Explore exciting events and connect with your community.</p>
+                <p>Check out our <span class="special-offer">special early bird offer</span> for upcoming workshops!</p>
+            </div>
+            <p>This portal is designed to make it easy for you to find and register for local events, access city services, and stay informed about what's happening around you.</p>
+            <p>Don't forget to check out our <span class="highlight">Event Gallery</span> below!</p>
+        </section>
+
+        <hr>
+
+        <section id="events">
+            <h2>Upcoming Events</h2>
+            <h3>Discover a variety of events tailored for all ages and interests.</h3>
+            <p>Click on an image to enlarge it!</p>
+
+            <div class="filter-controls">
+                <label for="categoryFilter">Filter by Category:</label>
+                <select id="categoryFilter">
+                    <option value="all">All Categories</option>
+                    <option value="music">Music</option>
+                    <option value="workshop">Workshop</option>
+                    <option value="sports">Sports</option>
+                    <option value="market">Market</option>
+                    <option value="social">Social</option>
+                </select>
+
+                <label for="eventSearch">Search Event:</label>
+                <input type="text" id="eventSearch" placeholder="Search by name...">
+            </div>
+
+            <div id="events-list" class="event-cards-container">
+                <p id="loading-spinner">Loading events...</p>
+            </div>
+
+            <table class="event-gallery">
+                <caption>A Glimpse of Past Community Joy</caption>
+                <tr>
+                    <td>
+                        <img src="https://via.placeholder.com/180x120/A0DAFB/000000?text=Summer+Festival" alt="Summer Festival" title="A lively summer festival with music and food." class="gallery-image">
+                        <div class="gallery-caption">Summer Festival</div>
+                    </td>
+                    <td>
+                        <img src="https://via.placeholder.com/180x120/8EDCE6/000000?text=Art+Workshop" alt="Art Workshop" title="Attendees focusing on their artwork during a workshop." class="gallery-image">
+                        <div class="gallery-caption">Art Workshop</div>
+                    </td>
+                    <td>
+                        <img src="https://via.placeholder.com/180x120/A5C3EE/000000?text=Community+Run" alt="Community Run" title="Runners at the start line of a community charity run." class="gallery-image">
+                        <div class="gallery-caption">Community Run</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <img src="https://via.placeholder.com/180x120/B0E0E6/000000?text=Farmers+Market" alt="Farmers Market" title="Local farmers selling fresh produce at the market." class="gallery-image">
+                        <div class="gallery-caption">Farmers Market</div>
+                    </td>
+                    <td>
+                        <img src="https://via.placeholder.com/180x120/C6E2FF/000000?text=Book+Club" alt="Book Club Meeting" title="Group discussion at a local book club meeting." class="gallery-image">
+                        <div class="gallery-caption">Book Club Meeting</div>
+                    </td>
+                    <td>
+                        <img src="https://via.placeholder.com/180x120/ADD8E6/000000?text=Volunteer+Day" alt="Volunteer Day" title="Volunteers cleaning up a local park." class="gallery-image">
+                        <div class="gallery-caption">Volunteer Day</div>
+                    </td>
+                </tr>
+            </table>
+        </section>
+
+        <hr>
+
+        <section id="registration">
+            <h2>Event Registration</h2>
+            <form id="eventRegistrationForm">
+                <label for="fullName">Full Name:</label>
+                <input type="text" id="fullName" name="fullName" placeholder="John Doe" required autofocus>
+
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" placeholder="john.doe@example.com" required>
+
+                <label for="phone">Phone Number:</label>
+                <input type="text" id="phone" name="phone" placeholder="e.g., 123-456-7890" onblur="validatePhoneNumber()">
+                <small id="phoneError" style="color: red;"></small>
+
+                <label for="eventSelect">Select Event to Register:</label>
+                <select id="eventSelect" name="eventSelect" required>
+                    <option value="">--Select an Event--</option>
+                    </select>
+
+                <label for="message">Your Message / Special Requests:</label>
+                <textarea id="message" name="message" placeholder="Any special requests or comments?" rows="4"></textarea>
+
+                <button type="submit" id="registerBtn">Register Now</button>
+            </form>
+            <output id="registrationConfirmation"></output>
+            <button id="clearPreferences" style="margin-top: 1rem;">Clear Preferences</button>
+        </section>
+
+        <hr>
+
+        <section id="feedback">
+            <h2>Event Feedback</h2>
+            <form id="feedbackForm">
+                <label for="feedbackTextarea">Your Feedback:</label>
+                <textarea id="feedbackTextarea" name="feedbackTextarea" rows="6" placeholder="Share your thoughts about our events..." onkeyup="countCharacters(this)"></textarea>
+                <small>Characters remaining: <span id="charCount">500</span></small>
+            </form>
+        </section>
+
+        <hr>
+
+        <section id="news-article">
+            <h2>Community Bulletin: Latest News</h2>
+            <div class="news-content">
+                <p>Welcome to our latest community bulletin! Here, we share important updates, upcoming initiatives, and highlights from recent events. Our goal is to keep you informed and engaged with everything happening in our vibrant community. This month, we're excited to announce the launch of our new recycling program, aimed at making our town greener and more sustainable.</p>
+
+                <p>The program includes new collection points and educational workshops on proper waste separation. We encourage all residents to participate and help us achieve our environmental goals. Furthermore, preparations are well underway for the annual 'Green Thumb' gardening competition. Register early to showcase your gardening skills and contribute to the beautification of our shared spaces.</p>
+
+                <p>We've also seen a tremendous turnout at the recent 'Neighbors Helping Neighbors' clean-up drive. Over 150 volunteers dedicated their time to tidy up our local parks and public areas. Such initiatives truly embody the spirit of our community. Thank you to everyone who participated!</p>
+
+                <p>Looking ahead, mark your calendars for the 'Community Health Fair' next month. It will feature free health screenings, wellness workshops, and consultations with local health professionals. It's a great opportunity to learn more about maintaining a healthy lifestyle and connect with health resources in our area.</p>
+
+                <p>Finally, we are seeking volunteers for various roles across different community projects. Whether you have an hour a week or a day a month, your contribution can make a significant difference. Visit the 'Volunteer Opportunities' section on our portal to learn more and sign up. Your community thrives when we all work together!</p>
+            </div>
+        </section>
+
+        <hr>
+
+        <section>
+            <h2>Event Promo Video</h2>
+            <div class="video-container">
+                <video id="promoVideo" controls oncanplay="displayVideoReady()">
+                    <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <p id="videoMessage"></p>
+            </div>
+        </section>
+
+        <hr>
+
+        <section>
+            <h2>Find Nearby Events</h2>
+            <p>Click the button below to find events closest to your current location.</p>
+            <button onclick="findNearbyEvents()">Find Nearby Events</button>
+            <p id="locationDisplay"></p>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Community Events Portal. All rights reserved.</p>
+    </footer>
+
+    <script src="main.js"></script>
+</body>
+</html>
